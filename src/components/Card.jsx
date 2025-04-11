@@ -7,8 +7,8 @@ const Card = ({title, image, desc, cookTime, dietType}) => {
         <div className='card-content'>
             <h3>{title}</h3>
             <p>{desc}</p>
-            <p>{cookTime}</p>
-            <p>{dietType}</p>
+            <p>Cooking Time: {cookTime} mins</p>
+            <p>Diet Type: {dietType}</p>
         </div>
     </div>
   )

@@ -1,6 +1,10 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import List from './List'
+import CookingTimeChart from '../charts/BarChart.jsx';
+import DietDistributionChart from '../charts/PieChart.jsx';
+import Card from './Card.jsx';
 
 const Home = () => {
     const [recipes, setRecipes] = useState([])
@@ -18,6 +22,7 @@ const Home = () => {
         }
         fetchRecipes()
     }, [])  
+
     const [searchQuery, setSearchQuery] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('');
 
@@ -54,6 +59,11 @@ const Home = () => {
                     ))}
                 </select>
                 </div>
+                
+                <div className="chart-container">
+                    <CookingTimeChart recipes={recipes} />
+                    <DietDistributionChart recipes={recipes} />
+                </div>
 
                 {/* Summary Statistics */}
                 <div className="stats">
@@ -73,7 +83,20 @@ const Home = () => {
 
                 {/* Recipe List */}
                 <h2>Random Recipes</h2>
-                <List items={filteredRecipes} />
+                    <div className='list'>  
+                        {filteredRecipes.map(recipe => (
+                            <Link to = {`/recipe/${recipe.id}`} key = {recipe.id}>
+                                <Card 
+                                    title = {recipe.title}
+                                    image = {recipe.image}
+                                    desc = {recipe.summary}
+                                    cookTime = {recipe.readyInMinutes}
+                                    dietType = {recipe.diets.join(',')}
+                                />
+                            </Link> 
+                        ))}
+                    </div>
+
             </main>
         </div>
     ) 
